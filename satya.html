@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login & Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            width: 300px;
+            background-color:None;
+            padding: 100px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(20, 197, 200, 0.919);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color:aqua;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .form-container .form-switch {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Login&Registration</h1><br>
+        <form id="login-form">
+            <input type="email" name="login_email" placeholder="Email" required>
+            <input type="password" name="login_password" placeholder="Password" required>
+            <button onclick="login() ">Login</button>
+            <div class="form-switch">
+                <p style="color:whitesmoke";>Don't have an account?</p>
+                  <a href="#" onclick="showRegisterForm()">Register</a>
+            </div>
+        </form>
+        <form id="register-form" style="display: none;">
+            <input type="text" name="register_username" placeholder="Username" required>
+            <input type="email" name="register_email" placeholder="Email" required>
+            <input type="password" name="register_password" placeholder="Password" required>
+            <input type="confirm password" name="register_password" placeholder=" confirm Password" required>
+            <button type="submit" onclick="register()">Register</button>
+            <div class="form-switch">
+                <p style="color:white">Already have an account?</p>
+                <a href="#" onclick="showLoginForm()">Login</a>
+                
+            </div>
+        </form>    
+    </div>
+    <script>
+        function showRegisterForm() {
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("register-form").style.display = "block";
+         
+        }
+        function showLoginForm() {
+            document.getElementById("login-form").style.display = "block";
+            document.getElementById("register-form").style.display = "none";
+            
+            
+        }
+  // Load existing users from local storage
+var registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+// Function to save users to local storage
+function saveUsersToLocalStorage() {
+    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+}
+// Function to register a new user
+function register() {
+    var username = document.getElementsByName("register_username")[0].value;
+    var email = document.getElementsByName("register_email")[0].value;
+    var password = document.getElementsByName("register_password")[0].value;
+    
+    registeredUsers.push({email, password });
+    saveUsersToLocalStorage();
+    
+    alert("Registration successful!");
+    showLoginForm();
+}
+// Function to perform login
+function login() {
+    var email = document.getElementsByName("login_email")[0].value;
+    var password = document.getElementsByName("login_password")[0].value;
+    
+    var user = registeredUsers.find(u => u.email === email && u.password === password);
+    
+    if (user) {
+        alert("Login successfull! Redirecting to another page.");
+        // Redirect to another page
+    } else {
+        alert("Invalid login details.");
+    }
+}
+    </script>
+</body>
+</html>
